@@ -37,8 +37,8 @@ async def process_queue(queue, stop_event):
             if distance_mm is not None:
                 if distance_mm < 250:
                     angle_rad = math.radians(angle_deg)
-                    x = distance_mm * math.cos(angle_rad)
-                    y = distance_mm * math.sin(angle_rad)
+                    x = distance_mm * math.cos(angle_rad - math.pi / 2)
+                    y = distance_mm * math.sin(angle_rad - math.pi / 2)
                     rev_temp_xs.append(x)
                     rev_temp_ys.append(y)
 
@@ -49,7 +49,7 @@ async def process_queue(queue, stop_event):
                     rev_temp_xs = []
                     rev_temp_ys = []
                     # print("New Revolution")
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(0.01)
 
 
 try:

@@ -51,10 +51,6 @@ async def run_plot():
             )
         pygame.display.flip()
 
-        # for event in pygame.event.get():
-        #     if event.type == pygame.QUIT:
-        #         raise KeyboardInterrupt
-
         await asyncio.sleep(0.01)  # yield control
 
 
