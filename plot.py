@@ -27,7 +27,7 @@ async def run_plot():
     points = []  # all rev points to draw
     running = True
 
-    while running:
+    while True:
         # Drain the queue and add new points to the main list
         # @TODO fix this since we don't technicaly need this :D
         while not point_queue.empty():
@@ -51,16 +51,23 @@ async def run_plot():
             )
         pygame.display.flip()
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                raise KeyboardInterrupt
+        # for event in pygame.event.get():
+        #     if event.type == pygame.QUIT:
+        #         raise KeyboardInterrupt
 
         await asyncio.sleep(0.01)  # yield control
 
 
+async def shutdown_plot_loop():
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                raise KeyboardInterrupt
+        await asyncio.sleep(0.1)
+
+
 async def main():
-    # Run producer and plotter concurrently
-    await asyncio.gather(run_plot())
+    await asyncio.gather(run_plot(), shutdown_plot_loop())
 
 
 def get_start_plot():
